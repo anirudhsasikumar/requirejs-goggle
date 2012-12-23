@@ -22,7 +22,7 @@ define(function (require, exports, module) {
         return cm.getSearchCursor(query, pos, typeof query === "string" && query === query.toLowerCase());
     }
 
-    //stolen from findinfiles as is, no changes.
+    //stolen from findinfiles. Scope removed.
     function _showSearchResults(searchResults, query) {
         var $searchResultsDiv = $("#search-results");
 
@@ -151,7 +151,9 @@ define(function (require, exports, module) {
                     dupMatch = dupCursor.findNext();
 
                 if (dupMatch && !dupCursor.findNext()) {
-                    _results.push({from: cursor.from(), to: cursor.to(), start: {line: cursor.from().line}, end: {line: cursor.to().line}, line: found[0]});
+                    var from = cursor.from(),
+                        to = cursor.to();
+                    _results.push({start: {ch: from.ch, line: from.line}, end: {ch: to.ch, line: to.line}, line: found[0]});
                 }
             } else {
                 break;
